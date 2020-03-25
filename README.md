@@ -4,9 +4,36 @@
 
 Source: https://runnable.com/docker/java/dockerize-your-java-application
 
+## Introduction
+
+*   We started originally with the Dockerfile written for the image pulled from `phusion/baseimage`
+
+*   As we already know, **Oracle** has changed its policies regarding Java downloads; they do not allow to download automatically their Java resources. For instance, this will not work anymore:
+
+    ```
+    RUN echo 'deb http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /etc/apt/sources.list && \
+        echo 'deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu trusty main' >> /etc/apt/sources.list && \
+        apt-key adv --keyserver keyserver.ubuntu.com --recv-keys C2518248EEA14886 && \
+        apt-get update && \
+    ```
+
+    The `webupd8team` PPA will throw error when we try to install Oracle JDK-8. 
+
+    
+
+*   The Oracle JDK for any version has to be downloaded manually with an Oracle user account, and have to agree with terms and conditions.
+
+*   Therefore, the Dockerfile has to be modified in order to install Oracle JDK-8.
+
+*   After successfully building the Docker image with `phusion/baseimage`, we do the same for Ubuntu and Debian.
+
+
+
+
+
 ## Create a Dockerfile
 
-### Original Dockerfile for phusion
+### Original Dockerfile for `phusion/baseimage`
 
 ```dockerfile
 # Dockerfile
@@ -41,7 +68,6 @@ RUN echo "export JAVA_HOME=/opt/java-jdk/jdk1.8.0_231" >> ~/.bashrc
 ```
 # Dockerfile
 
-# FROM  phusion/baseimage:0.9.17
 FROM ubuntu:16.04
 
 # RUN echo "deb http://archive.ubuntu.com/ubuntu trusty main universe" > /etc/apt/sources.list
@@ -73,7 +99,7 @@ RUN update-alternatives --install /usr/bin/jcontrol jcontrol /opt/java-jdk/jdk1.
 
 ## Build the image
 
-### phusion OS
+### `phusion/baseimage`
 
 ```
 docker build --file Dockerfile -t oracle-java-8:phusion .
@@ -85,13 +111,17 @@ docker build --file Dockerfile -t oracle-java-8:phusion .
 docker build --file Dockerfile.ubuntu -t ubuntu/oracle-java:8 .
 ```
 
+### Debian 9
+
+
+
 
 
 ## Compile Java source code with the container
 
 Ensure the Java code is in the same folder where you are running this command.
 
-### phusion OS
+### `phusion/baseimage`
 
 ```
 docker run --rm -v $PWD:/app -w /app oracle-java-8:phusion javac Main.java
@@ -103,7 +133,7 @@ docker run --rm -v $PWD:/app -w /app oracle-java-8:phusion javac Main.java
 docker run --rm -v $PWD:/app -w /app ubuntu/oracle-java:8 javac Main.java
 ```
 
-### Debian
+### Debian 9
 
 ```
 docker run --rm -v $PWD:/app -w /app oracle-java-8:debian javac Main.java
@@ -113,7 +143,7 @@ docker run --rm -v $PWD:/app -w /app oracle-java-8:debian javac Main.java
 
 ## Run the Java class
 
-### phusion
+### `phusion/baseimage`
 
 ```
 docker run --rm -v $PWD:/app -w /app oracle-java-8:phusion java Main
@@ -146,7 +176,7 @@ public class Main
 
 
 
-## How to deal with the 194 MB JDK file
+## How to deal with the 194 MB JDK-8 file
 
 In this case the file will not be able to be pushed to Git as the other files; we have to use `Git LFS`.
 
@@ -178,7 +208,15 @@ And save it as we usually do with any file:
 
 ### Get the 194 MB file from GitHub with `wget`
 
+In DockerHub we will not be able to use the `Dockerfile` command `COPY` to copy the file `jdk-8u231-linux-x64.tar.gz` that is living in the **GitHub** repo; we have to obtaining it using the Linux command `wget`. So, we add this line to the Dockerfile to "download" the 194 MB file:
+
+```
+RUN wget --quiet https://github.com/docker-oilgains/oracle-java-8/raw/master/jdk-8u231-linux-x64.tar.gz
+```
+
+>   This will run in **DockerHub** and **Travis**.
+
 ## Notes
 
-1.  To build this container based on Oracle JDK 8, we made use of `Git LFS`. The `tar` file was downloaded manually from Oracle and then pushed as a `LFS`  file.
+1.  To build this container based on Oracle JDK-8, we made use of `Git LFS`. The `tar` file was downloaded manually from Oracle and then pushed as a `LFS`  file.
 2.  The way a Docker image is built in **DockerHub** is different than the way the image is built in **Travis**. In Travis the command `COPY` works for the Java `tar` file while in DockerHub only copies the string with the Git address to the file.
