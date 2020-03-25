@@ -103,6 +103,12 @@ docker run --rm -v $PWD:/app -w /app oracle-java-8:phusion javac Main.java
 docker run --rm -v $PWD:/app -w /app ubuntu/oracle-java:8 javac Main.java
 ```
 
+### Debian
+
+```
+docker run --rm -v $PWD:/app -w /app oracle-java-8:debian javac Main.java
+```
+
 
 
 ## Run the Java class
@@ -119,6 +125,12 @@ docker run --rm -v $PWD:/app -w /app oracle-java-8:phusion java Main
 docker run --rm -v $PWD:/app -w /app ubuntu/oracle-java:8 java Main
 ```
 
+### Debian
+
+```
+docker run --rm -v $PWD:/app -w /app oracle-java-8:debian java Main
+```
+
 
 
 ## Java source code
@@ -132,3 +144,41 @@ public class Main
 }
 ```
 
+
+
+## How to deal with the 194 MB JDK file
+
+In this case the file will not be able to be pushed to Git as the other files; we have to use `Git LFS`.
+
+First, we have to install it, and then follow some instructions to push it as an `LFS` file. We have to be careful of not pushing the big file with the rest of small files in the Git repo otherwise we get stuck without being able to push anything.
+
+### Make the 194 MB  `tar` file a `LFS` file
+
+```
+ git lfs track "*.tar.gz"
+ git add .gitattributes
+ git add jdk-8u231-linux-x64.tar.gz
+ git commit -m "Add Oracle jdk-8 tar.gz file"
+ git push origin master
+```
+
+Now, we can deal with the smaller files.
+
+### Download the 194 MB file from GitHub
+
+Just click on the download button:
+
+![image-20200325181522513](assets/README/image-20200325181522513.png)
+
+And save it as we usually do with any file:
+
+<img src="assets/README/image-20200325181624337.png" alt="image-20200325181624337" style="zoom:80%;" />
+
+
+
+### Get the 194 MB file from GitHub with `wget`
+
+## Notes
+
+1.  To build this container based on Oracle JDK 8, we made use of `Git LFS`. The `tar` file was downloaded manually from Oracle and then pushed as a `LFS`  file.
+2.  The way a Docker image is built in **DockerHub** is different than the way the image is built in **Travis**. In Travis the command `COPY` works for the Java `tar` file while in DockerHub only copies the string with the Git address to the file.
