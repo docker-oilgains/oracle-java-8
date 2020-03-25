@@ -12,5 +12,6 @@ services:
 script:
   - echo "Starting build of Docker image..."
   - docker build --no-cache --pull --file Dockerfile.debian -t oracle-java-8:debian .
+  - docker build --no-cache --pull --file Dockerfile.ubuntu -t oracle-java-8:ubuntu .
 
 #  - docker build --no-cache --pull -t $TRAVIS_REPO_SLUG:$TRAVIS_JOB_ID .
