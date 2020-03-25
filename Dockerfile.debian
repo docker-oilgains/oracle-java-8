@@ -3,6 +3,7 @@ FROM debian:9
 RUN apt-get -y update
 
 RUN DEBIAN_FRONTEND=noninteractive 
+RUN apt-get install -y bzip2
 # apt-get install -y -q python-software-properties software-properties-common
 
 ENV JAVA_VER 8
