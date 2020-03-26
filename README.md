@@ -219,4 +219,21 @@ RUN wget --quiet https://github.com/docker-oilgains/oracle-java-8/raw/master/jdk
 ## Notes
 
 1.  To build this container based on Oracle JDK-8, we made use of `Git LFS`. The `tar` file was downloaded manually from Oracle and then pushed as a `LFS`  file.
+
 2.  The way a Docker image is built in **DockerHub** is different than the way the image is built in **Travis**. In Travis the command `COPY` works for the Java `tar` file while in DockerHub only copies the string with the Git address to the file.
+
+3.  Downloading multiple times from LFS in GitHub produces this error:
+    ![image-20200325190818762](assets/README/image-20200325190818762.png)
+
+    ```
+    Error downloading object: jdk-8u231-linux-x64.tar.gz (76062c8): Smudge error: Error downloading jdk-8u231-linux-x64.tar.gz (76062c86e9177baf1417e714bd399ee05ee76dcaf7a33a5e18ac7459ff61afe2): batch response: This repository is over its data quota. Account responsible for LFS bandwidth should purchase more data packs to restore access.
+    ```
+
+    About Git LFS excess bandwidth, read here:
+
+    *   https://help.github.com/en/github/managing-large-files/about-storage-and-bandwidth-usage
+    *   https://github.com/nabla-c0d3/nassl/issues/17
+    *   https://stackoverflow.com/questions/56410647/how-to-get-large-files-from-git-lfs-when-error-even-though-you-have-credits
+
+    
+
