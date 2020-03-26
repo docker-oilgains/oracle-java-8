@@ -235,5 +235,45 @@ RUN wget --quiet https://github.com/docker-oilgains/oracle-java-8/raw/master/jdk
     *   https://github.com/nabla-c0d3/nassl/issues/17
     *   https://stackoverflow.com/questions/56410647/how-to-get-large-files-from-git-lfs-when-error-even-though-you-have-credits
 
-    
+
+
+## Downloading big files from Google Drive
+
+Solution here: https://gist.github.com/iamtekeste/3cdfd0366ebfd2c0d805
+
+
+
+
+
+## Experiments
+
+https://drive.google.com/file/d/1jhZzbGrxR35kHZuqew6xtNO88VWJA24o/view?usp=sharing
+
+Extract FILEID: 1jhZzbGrxR35kHZuqew6xtNO88VWJA24o
+
+For large files:
+
+```
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=FILEID' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=FILEID" -O FILENAME && rm -rf /tmp/cookies.txt
+```
+
+
+
+```
+wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=FILEID' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1jhZzbGrxR35kHZuqew6xtNO88VWJA24o" -O jdk-8u231-linux-x64.tar.gz && rm -rf /tmp/cookies.txt
+```
+
+
+
+https://drive.google.com/open?id=1fN3KvH7UBEvIKTL2ZpTkk1PC3xDdA1gN
+
+
+
+https://drive.google.com/file/d/1fN3KvH7UBEvIKTL2ZpTkk1PC3xDdA1gN/view?usp=sharing
+
+https://drive.google.com/file/d/1fN3KvH7UBEvIKTL2ZpTkk1PC3xDdA1gN/view?usp=sharing
+
+
+
+The xlsx file: https://drive.google.com/file/d/1qRN8bEvb02WgalGN9BQW0Dpea5rv2_lJ/view?usp=sharing
 
