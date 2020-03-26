@@ -351,8 +351,6 @@ I save this file as `debian10.Dockerfile`.
 
 
 
-
-
 ## Java source code for `Main.java`
 
 ```java

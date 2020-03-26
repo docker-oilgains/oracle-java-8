@@ -8,11 +8,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y -q wget python-software-pr
 
 ENV JAVA_VER 8
 
-# # Define commonly used JAVA_HOME variable
+# Define commonly used JAVA_HOME variable
 ENV JAVA_HOME /opt/java-jdk/jdk1.8.0_231
-
-# copy Oracle Java8 to container
-# COPY jdk-8u231-linux-x64.tar.gz .
 
 
 # Get the JDK-8 from Google Drive
