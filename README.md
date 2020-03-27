@@ -156,7 +156,7 @@ docker build --file phusion.Dockerfile -t oracle-java-8:phusion .
 ### Ubuntu 16.04
 
 ```bash
-docker build --file ubuntu16.Dockerfile.ubuntu -t ubuntu/oracle-java-8:ubuntu16 .
+docker build --file ubuntu16.Dockerfile -t oracle-java-8:ubuntu16 .
 ```
 
 
@@ -174,7 +174,7 @@ docker run --rm -v $PWD:/app -w /app oracle-java-8:phusion javac Main.java
 ### Ubuntu 16.04
 
 ```bash
-docker run --rm -v $PWD:/app -w /app ubuntu/oracle-java-8:ubuntu16 javac Main.java
+docker run --rm -v $PWD:/app -w /app oracle-java-8:ubuntu16 javac Main.java
 ```
 
 
@@ -190,7 +190,7 @@ docker run --rm -v $PWD:/app -w /app oracle-java-8:phusion java Main
 ### Ubuntu
 
 ```
-docker run --rm -v $PWD:/app -w /app ubuntu/oracle-java:8 java Main
+docker run --rm -v $PWD:/app -w /app oracle-java:ubuntu16 java Main
 ```
 
 
