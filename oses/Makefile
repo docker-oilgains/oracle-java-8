@@ -1,5 +1,7 @@
 _phusion:
 			docker build -f phusion.Dockerfile   -t f0nzie/oracle-java-8:phusion .
+_ubuntu14:
+			docker build -f ubuntu14.Dockerfile  -t f0nzie/oracle-java-8:ubuntu14 .			
 _ubuntu16:
 			docker build -f ubuntu16.Dockerfile  -t f0nzie/oracle-java-8:ubuntu16 .
 _ubuntu18:

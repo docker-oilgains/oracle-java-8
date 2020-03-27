@@ -1,5 +1,7 @@
 phusion: .PHONY
 		 make -C oses/ _phusion
+ubuntu14: .PHONY
+		  make -C oses/ _ubuntu14		 
 ubuntu16: .PHONY
 		  make -C oses/ _ubuntu16
 ubuntu18: .PHONY
@@ -15,4 +17,4 @@ debian10: .PHONY
 
 
 all:
-		phusion ubuntu16 ubuntu18 debian9
+		phusion ubuntu14 ubuntu16 ubuntu18 debian9
